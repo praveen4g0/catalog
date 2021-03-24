@@ -33,7 +33,7 @@ function check-service-endpoints() {
   count=0
   while [[ -z $(${KUBECTL_CMD} get endpoints ${service} -n ${namespace} -o jsonpath='{.subsets}') ]]; do
     # retry for 15 mins
-    sleep 10
+    sleep 20
     if [[ $count -gt 90 ]]; then
       echo ${namespace}/${service} endpoints unavailable
       exit 1
@@ -57,6 +57,7 @@ cd $(dirname $(readlink -f $0))/..
 
 # list tekton-pipelines-webhook service endpoints
 check-service-endpoints "tekton-pipelines-webhook" "tekton-pipelines"
+check-service-endpoints "tekton-pipelines-controller" "tekton-pipelines"
 
 CURRENT_TAG=$(git describe --tags 2>/dev/null || true)
 
