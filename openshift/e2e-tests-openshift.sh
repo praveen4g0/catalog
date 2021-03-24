@@ -33,7 +33,7 @@ function check-service-endpoints() {
   count=0
   while [[ -z $(${KUBECTL_CMD} get endpoints ${service} -n ${namespace} -o jsonpath='{.subsets}') ]]; do
     # retry for 15 mins
-    sleep 20
+    sleep 10
     if [[ $count -gt 90 ]]; then
       echo ${namespace}/${service} endpoints unavailable
       exit 1

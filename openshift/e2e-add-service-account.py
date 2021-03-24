@@ -9,6 +9,9 @@ import yaml
 import sys
 data = list(yaml.safe_load_all(sys.stdin))
 for x in data:
-    if x['kind'] in ('PipelineRun', 'TaskRun'):
-        x['spec']['serviceAccountName'] = sys.argv[1]
+    try:
+        if x['kind'] in ('PipelineRun', 'TaskRun'):
+            x['spec']['serviceAccountName'] = sys.argv[1]
+    except TypeError:
+        continue        
 print(yaml.dump_all(data, default_flow_style=False))
